@@ -29,10 +29,42 @@ void main() {
     final jsonSchema = JsonSchema.createSchema(schema);
 
     final normalValue = '2022-07-02T00:00:00';
-    final abnormalValue = '2022-07-01T23:59:59';
+    final abnormalValue = '2022-07-02T00:00:01';
 
-    expect(jsonSchema.validate(normalValue), false);
-    expect(jsonSchema.validate(abnormalValue), true);
+    expect(jsonSchema.validate(normalValue), true);
+    expect(jsonSchema.validate(abnormalValue), false);
+  });
+
+  test('formatExclusiveMinimum test', () {
+    final schema = {
+      'type': 'string',
+      'format': 'date-time',
+      'formatExclusiveMinimum': '2022-07-02T00:00:00', // 7/2 0時0分より後
+    };
+
+    final jsonSchema = JsonSchema.createSchema(schema);
+
+    final normalValue = '2022-07-02T00:00:01';
+    final abnormalValue = '2022-07-02T00:00:00';
+
+    expect(jsonSchema.validate(normalValue), true);
+    expect(jsonSchema.validate(abnormalValue), false);
+  });
+
+  test('formatExclusiveMaximum test', () {
+    final schema = {
+      'type': 'string',
+      'format': 'date-time',
+      'formatExclusiveMinimum': '2022-07-02T00:00:00', // 7/2 0時0分より前
+    };
+
+    final jsonSchema = JsonSchema.createSchema(schema);
+
+    final normalValue = '2022-07-01T23:59:59';
+    final abnormalValue = '2022-07-02T00:00:00';
+
+    expect(jsonSchema.validate(normalValue), true);
+    expect(jsonSchema.validate(abnormalValue), false);
   });
 
   test('formatXXX test', () {
