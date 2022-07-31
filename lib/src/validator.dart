@@ -395,6 +395,105 @@ class Validator {
     }
   }
 
+  void _validateFormatMaximum(JsonSchema schema, Instance instance) {
+    if (instance.data is! String) {
+      _err(
+        '${instance.data} is type ${instance.data.runtimeType}; only inputs '
+        'of type String are accepted for format operations.',
+        instance.path,
+        schema.path!,
+      );
+      return;
+    }
+
+    final schemaDateTime = DateTime.tryParse(schema.formatMaximum ?? '');
+    final valueDateTime = DateTime.tryParse(instance.data);
+
+    if (valueDateTime == null || schemaDateTime == null) {
+      _err(
+        '"date-time" format not accepted $instance',
+        instance.path,
+        schema.path!,
+      );
+      return;
+    }
+
+    if (schemaDateTime.compareTo(valueDateTime) == -1) {
+      _err(
+        '"formatMaximum" not accepted $instance',
+        instance.path,
+        schema.path!,
+      );
+      return;
+    }
+  }
+
+  void _validateFormatExclusiveMinimum(JsonSchema schema, Instance instance) {
+    if (instance.data is! String) {
+      _err(
+        '${instance.data} is type ${instance.data.runtimeType}; only inputs '
+        'of type String are accepted for format operations.',
+        instance.path,
+        schema.path!,
+      );
+      return;
+    }
+
+    final schemaDateTime = DateTime.tryParse(schema.formatExclusiveMinimum ?? '');
+    final valueDateTime = DateTime.tryParse(instance.data);
+
+    if (valueDateTime == null || schemaDateTime == null) {
+      _err(
+        '"date-time" format not accepted $instance',
+        instance.path,
+        schema.path!,
+      );
+      return;
+    }
+
+    if (schemaDateTime.compareTo(valueDateTime) != -1) {
+      _err(
+        '"formatExclusiveMinimum" not accepted $instance',
+        instance.path,
+        schema.path!,
+      );
+      return;
+    }
+  }
+
+  void _validateFormatExclusiveMaximum(JsonSchema schema, Instance instance) {
+    if (instance.data is! String) {
+      _err(
+        '${instance.data} is type ${instance.data.runtimeType}; only inputs '
+        'of type String are accepted for format operations.',
+        instance.path,
+        schema.path!,
+      );
+      return;
+    }
+
+    final schemaDateTime = DateTime.tryParse(schema.formatExclusiveMaximum ?? '');
+    final valueDateTime = DateTime.tryParse(instance.data);
+
+    if (valueDateTime == null || schemaDateTime == null) {
+      _err(
+        '"date-time" format not accepted $instance',
+        instance.path,
+        schema.path!,
+      );
+      return;
+    }
+
+    if (schemaDateTime.compareTo(valueDateTime) != 1) {
+      _err(
+        '"formatExclusiveMaximum" not accepted $instance',
+        instance.path,
+        schema.path!,
+      );
+      return;
+    }
+  }
+
   void _validateFormat(JsonSchema schema, Instance instance) {
     if (instance.data is! String) {
       _err(
@@ -670,6 +769,9 @@ class Validator {
     if (schema.notSchema != null) _validateNot(schema, instance);
     if (schema.format != null) _validateFormat(schema, instance);
     if (schema.formatMinimum != null) _validateFormatMinimum(schema, instance);
+    if (schema.formatMaximum != null) _validateFormatMaximum(schema, instance);
+    if (schema.formatExclusiveMinimum != null) _validateFormatExclusiveMinimum(schema, instance);
+    if (schema.formatExclusiveMaximum != null) _validateFormatExclusiveMaximum(schema, instance);
     if (instance.data is Map) _objectValidation(schema, instance);
   }
 

@@ -55,7 +55,7 @@ void main() {
     final schema = {
       'type': 'string',
       'format': 'date-time',
-      'formatExclusiveMinimum': '2022-07-02T00:00:00', // 7/2 0時0分より前
+      'formatExclusiveMaximum': '2022-07-02T00:00:00', // 7/2 0時0分より前
     };
 
     final jsonSchema = JsonSchema.createSchema(schema);

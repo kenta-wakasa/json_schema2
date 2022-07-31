@@ -602,6 +602,9 @@ class JsonSchema {
 
   ///
   String? _formatMinimum;
+  String? _formatMaximum;
+  String? _formatExclusiveMinimum;
+  String? _formatExclusiveMaximum;
 
   /// Map of [JsonSchema]s for properties, based on [RegExp]s keys.
   final Map<RegExp, JsonSchema> _patternProperties = {};
@@ -718,6 +721,9 @@ class JsonSchema {
       '\$id': (JsonSchema s, dynamic v) => s._setId(v),
       'required': (JsonSchema s, dynamic v) => s._setRequiredV6(v),
       'formatMinimum': (JsonSchema s, dynamic v) => s._setFormatMinimum(v),
+      'formatMaximum': (JsonSchema s, dynamic v) => s._setFormatMaximum(v),
+      'formatExclusiveMinimum': (JsonSchema s, dynamic v) => s._setFormatExclusiveMinimum(v),
+      'formatExclusiveMaximum': (JsonSchema s, dynamic v) => s._setFormatExclusiveMaximum(v),
     });
 
   /// Get a nested [JsonSchema] from a path.
@@ -871,6 +877,9 @@ class JsonSchema {
   String? get format => _format;
 
   String? get formatMinimum => _formatMinimum;
+  String? get formatMaximum => _formatMaximum;
+  String? get formatExclusiveMinimum => _formatExclusiveMinimum;
+  String? get formatExclusiveMaximum => _formatExclusiveMaximum;
 
   /// ID of the [JsonSchema].
   Uri? get id => _id;
@@ -1500,6 +1509,11 @@ class JsonSchema {
 
   ///
   void _setFormatMinimum(dynamic value) => _formatMinimum = TypeValidators.string('formatMinimum', value);
+  void _setFormatMaximum(dynamic value) => _formatMaximum = TypeValidators.string('formatMaximum', value);
+  void _setFormatExclusiveMinimum(dynamic value) =>
+      _formatExclusiveMinimum = TypeValidators.string('formatExclusiveMinimum', value);
+  void _setFormatExclusiveMaximum(dynamic value) =>
+      _formatExclusiveMaximum = TypeValidators.string('formatExclusiveMaximum', value);
 
   /// Validate, calculate and set the value of the 'patternProperties' JSON Schema prop.
   void _setPatternProperties(dynamic value) => (TypeValidators.object('patternProperties', value))
