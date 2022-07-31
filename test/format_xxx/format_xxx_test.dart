@@ -15,9 +15,24 @@ void main() {
     final normalValue = '2022-07-02T00:00:00';
     final abnormalValue = '2022-07-01T23:59:59';
 
-    expect(jsonSchema.formatMinimum, '2022-07-02T00:00:00');
     expect(jsonSchema.validate(normalValue), true);
     expect(jsonSchema.validate(abnormalValue), false);
+  });
+
+  test('formatMaximum test', () {
+    final schema = {
+      'type': 'string',
+      'format': 'date-time',
+      'formatMaximum': '2022-07-02T00:00:00', // 7/2以前
+    };
+
+    final jsonSchema = JsonSchema.createSchema(schema);
+
+    final normalValue = '2022-07-02T00:00:00';
+    final abnormalValue = '2022-07-01T23:59:59';
+
+    expect(jsonSchema.validate(normalValue), false);
+    expect(jsonSchema.validate(abnormalValue), true);
   });
 
   test('formatXXX test', () {
