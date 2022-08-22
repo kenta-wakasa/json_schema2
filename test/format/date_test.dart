@@ -24,6 +24,7 @@ void main() {
     final jsonSchema = JsonSchema.createSchema(schema);
 
     expect(jsonSchema.validate('23:59:59'), true);
+    expect(jsonSchema.validate('xxx23:59:59xxx'), false);
     expect(jsonSchema.validate('2022-07-01T23:59:59'), false);
     expect(jsonSchema.validate('2022-07-01'), false);
   });

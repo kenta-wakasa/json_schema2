@@ -564,19 +564,17 @@ class Validator {
         }
         break;
       case 'time':
-        {
-          final re = RegExp(r'^(\d{2}):(\d{2}):(\d{2})');
-          final match = re.firstMatch(instance.data);
-          if (match == null) {
-            _err(
-              '"time" format not accepted $instance',
-              instance.path,
-              schema.path!,
-            );
-          }
-          break;
+        try {
+          final dateTimeString = '1970-01-01T${instance.data}';
+          DateTime.parse(dateTimeString);
+        } catch (e) {
+          _err(
+            '"time" format not accepted $instance',
+            instance.path,
+            schema.path!,
+          );
         }
-
+        break;
       case 'uri':
         {
           final isValid =
