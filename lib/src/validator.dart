@@ -327,6 +327,14 @@ class Validator {
           instance.path,
           schema.path!,
         );
+      } else {
+        final index = (instance.data as List)
+            .indexWhere((item) => Validator(schema.contains).validate(item));
+        _err(
+          'matchedIndex:$index',
+          instance.path,
+          schema.path!,
+        );
       }
     }
   }
@@ -858,6 +866,9 @@ class Validator {
   void _err(String msg, String? instancePath, String schemaPath) {
     schemaPath = schemaPath.replaceFirst('#', '');
     _errors.add(ValidationError._(instancePath, schemaPath, msg));
+    if (msg.startsWith('matchedIndex:')) {
+      return;
+    }
     if (!_reportMultipleErrors) throw FormatException(msg);
   }
 }
