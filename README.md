@@ -1,5 +1,6 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
 **Table of Contents**
 
 - [JSON Schema](#json-schema)
@@ -21,27 +22,26 @@
 
 **NOTE**: This project is a fork from [json_schema](https://pub.dev/packages/json_schema) which itself appears to be no longer maintained.
 
-  A *platform agnostic* (dart:html or dart:io) Dart library for validating JSON instances against JSON Schemas (multi-version support with latest of Draft 6).
+A _platform agnostic_ (dart:html or dart:io) Dart library for validating JSON instances against JSON Schemas (multi-version support with latest of Draft 6).
 
 ![Build Status](https://travis-ci.org/workiva/json_schema.svg)
 
 ## How To Create and Validate Against a Schema
-  
+
 ### Synchronous Creation - Self Contained
-  
-The simplest way to create a schema is to pass JSON data directly to `JsonSchema.createSchema` with a JSON `String`, or decoded JSON via Dart `Map` or `bool`. 
+
+The simplest way to create a schema is to pass JSON data directly to `JsonSchema.createSchema` with a JSON `String`, or decoded JSON via Dart `Map` or `bool`.
 
 After creating any schema, JSON instances can be validated by calling `.validate(instance)` on that schema. By default, instances are expected to be pre-parsed JSON as native dart primitives (`Map`, `List`, `String`, `bool`, `num`, `int`). You can also optionally parse at validation time by passing in a string and setting `parseJson`: `schema.validate('{ "name": "any JSON object"}', parseJson: true)`.
-    
-  > Note: Creating JsonSchemas synchronously implies access to all $refs within the root schema. If you don't have access to all this data at the time of the construction, see "Asynchronous Creation" examples below.
 
+> Note: Creating JsonSchemas synchronously implies access to all $refs within the root schema. If you don't have access to all this data at the time of the construction, see "Asynchronous Creation" examples below.
 
 #### Example
 
-A schema can be created with a Map that is either hand-crafted, referenced from a JSON file, or *previously* fetched from the network or file system.
+A schema can be created with a Map that is either hand-crafted, referenced from a JSON file, or _previously_ fetched from the network or file system.
 
 ```dart
-import 'package:json_schema2/json_schema2.dart';
+import 'package:json_schema_plus/json_schema_plus.dart';
 
 main() {
   /// Define schema in a Dart [Map] or use a JSON [String].
@@ -67,9 +67,9 @@ If you want to create `JsonSchema`s synchronously, and you have $refs that canno
 
 #### Example
 
-```dart 
+```dart
 import 'dart:convert';
-import 'package:json_schema2/json_schema2.dart';
+import 'package:json_schema_plus/json_schema_plus.dart';
 
 main() {
   final referencedSchema = {
@@ -143,7 +143,7 @@ If you have schemas that have nested $refs that are HTTP URIs that are publicly 
 ```dart
 import 'dart:io';
 
-import 'package:json_schema2/json_schema2.dart';
+import 'package:json_schema_plus/json_schema_plus.dart';
 
 main() async {
 
@@ -180,7 +180,7 @@ You can also create a schema directly from a publicly accessible URL, like so:
 ```dart
 import 'dart:io';
 
-import 'package:json_schema2/json_schema2.dart';
+import 'package:json_schema_plus/json_schema_plus.dart';
 
 main() async {
   final url = "https://raw.githubusercontent.com/json-schema-org/JSON-Schema-Test-Suite/master/remotes/integer.json";
@@ -212,7 +212,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:json_schema2/json_schema2.dart';
+import 'package:json_schema_plus/json_schema_plus.dart';
 
 main() async {
   final referencedSchema = {

@@ -1,4 +1,4 @@
-import 'package:json_schema2/json_schema2.dart';
+import 'package:json_schema_plus/json_schema_plus.dart';
 
 class TypeValidators {
   static List list(String key, dynamic value) {
